@@ -1,7 +1,7 @@
-from unstructured.partition.pdf import partition_pdf
-
 def partition_document(file_path: str):
     """Extract elements from PDF using unstructured"""
+
+    from unstructured.partition.pdf import partition_pdf
 
     print(f"📄 Partitioning document: {file_path}")
     
