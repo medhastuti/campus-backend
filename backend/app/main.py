@@ -1,10 +1,42 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+print("1. FastAPI imported")
+
+from app.routes import upload
+print("2. Upload router imported")
+
+from app.routes import ask
+print("3. Ask router imported")
+
+app = FastAPI(title="RAG Assistant API")
+print("4. App created")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://campus-ai-nine-plum.vercel.app",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+print("5. CORS added")
+
+app.include_router(upload.router)
+print("6. Upload router included")
+
+app.include_router(ask.router)
+print("7. Ask router included")
+
 
 @app.get("/")
 def home():
-    return {"message": "Hello"}
+    return {
+        "message": "Backend is running successfully!"
+    }
 
 # from fastapi import FastAPI
 # from fastapi.middleware.cors import CORSMiddleware
